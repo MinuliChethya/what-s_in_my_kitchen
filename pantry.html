@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>My Pantry</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
+<style>
+
+body{
+margin:0;
+font-family:Arial;
+background-image: url("https://i.pinimg.com/736x/ce/b1/35/ceb1358ba63a422fe05792220243ad1b.jpg");
+background-attachment:fixed;
+background-size:cover;
+background-position:center;
+}
+
+/* Desktop container */
+.main-container{
+max-width:1200px;
+width:100%;
+margin:auto;
+/* background:white; */  /* Transparent to show background */
+}
+
+/* Navigation */
+nav{
+background:#e6a87a;
+padding:10px 0;
+text-align:center;
+color:#670D0D;
+}
+
+/* Hero section */
+.hero {
+    min-height: 500px;
+    height: auto;
+    padding: 40px 20px;
+    text-align: center;
+}
+
+/* Title box - matching homepage hero-box style */
+.title {
+    background: transparent;  /* Transparent to show background */
+    padding: clamp(20px, 5vw, 40px) clamp(20px, 5vw, 80px);
+    border-radius: 30px;
+    margin: 0 auto 30px auto;
+    max-width: 90%;
+    width: fit-content;
+    font-size: clamp(2rem, 6vw, 3rem);
+    font-weight: bold;
+    color: #7a0000;
+}
+
+/* Search responsive */
+.search {
+    margin: 20px auto 30px auto;
+    max-width: 600px;
+}
+
+.search input {
+    width: 100%;
+    padding: clamp(10px, 2vw, 15px) clamp(15px, 3vw, 25px);
+    border-radius: 40px;  /* Rounded like homepage hero-box */
+    border: 2px solid #e6a87a;
+    font-size: clamp(0.9rem, 2.5vw, 1rem);
+    background: rgba(255,255,255,0.9);
+}
+
+.search input:focus {
+    outline: none;
+    border-color: #7a0000;
+}
+
+/* Categories responsive */
+.categories {
+    display: flex; 
+    flex-wrap: wrap; 
+    gap: 10px;
+    justify-content: center;
+    margin: 25px auto;
+    max-width: 800px;
+}
+
+.categories button {
+    margin: 3px;
+    padding: clamp(8px, 1.5vw, 12px) clamp(15px, 3vw, 25px);
+    border: none;
+    background: #e6a87a;  /* Matching nav color */
+    border-radius: 30px;  /* More rounded like homepage */
+    cursor: pointer;
+    font-size: clamp(0.9rem, 2.2vw, 1rem);
+    font-weight: bold;
+    color: #670D0D;
+    transition: all 0.3s ease;
+}
+
+.categories button:hover {
+    background: #7a0000;
+    color: white;
+}
+
+/* Ingredient grid responsive */
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: clamp(15px, 2vw, 25px);
+    margin: 40px auto;
+    max-width: 1000px;
+    padding: 0 10px;
+}
+
+.item {
+    background: rgba(230, 168, 122, 0.85);  /* Semi-transparent like nav color */
+    padding: clamp(12px, 2vw, 18px);
+    border-radius: 15px;  /* Rounded corners */
+    font-size: clamp(1rem, 2.2vw, 1.1rem);
+    display: flex;
+    align-items: center;
+    font-weight: bold;
+    color: #670D0D;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: 2px solid transparent;
+}
+
+.item:hover {
+    background: rgba(230, 168, 122, 1);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+
+.item input[type="checkbox"] {
+    width: 20px;
+    height: 20px;
+    margin-right: 12px;
+    cursor: pointer;
+    accent-color: #7a0000;  /* Makes checkbox match theme */
+}
+
+/* Find recipes button - matching homepage button */
+.find {
+    text-align: center;
+    margin: 40px 0 20px 0;
+}
+
+.find button {
+    background: #7a0000;
+    color: white;
+    padding: clamp(12px, 2vw, 16px) clamp(30px, 6vw, 50px);
+    border: none;
+    border-radius: 40px;  /* Rounded like homepage */
+    cursor: pointer;
+    font-size: clamp(1rem, 2.5vw, 1.2rem);
+    font-weight: bold;
+    transition: all 0.3s ease;
+    min-width: 250px;
+}
+
+.find button:hover {
+    background: #5b390b;
+    transform: scale(1.05);
+}
+
+/* Footer */
+footer{
+background:black;
+color:white;
+text-align:center;
+padding:15px;
+margin-top: 30px;
+}
+
+/* Navigation styling */
+.nav-pills {
+    justify-content: center;
+}
+
+.nav-pills .nav-link {
+color: #8b0000; 
+font-weight: bold;
+margin: 0 10px;
+}
+
+.nav-pills .nav-link.active {
+    background-color: rgb(182, 128, 58);
+    color: #670D0D; 
+    font-weight: bold;
+}
+
+.nav-link:hover {
+    color: #ffb54d;
+    text-decoration: underline;
+}
+
+/* Responsive adjustments */
+@media screen and (max-width: 1200px) {
+    .main-container {
+        width: 95%;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .nav-pills {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .nav-pills .nav-link {
+        width: 100%;
+        text-align: center;
+        margin: 3px 0 !important;
+    }
+    
+    .grid {
+        grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .title {
+        font-size: clamp(1.5rem, 5vw, 2rem);
+        padding: 15px;
+    }
+    
+    .categories button {
+        white-space: normal;
+        flex: 1 1 auto;
+        min-width: 80px;
+        padding: 8px 12px;
+    }
+    
+    .find button {
+        width: 90%;
+        min-width: auto;
+    }
+    
+    .grid {
+        grid-template-columns: 1fr 1fr;  /* Two columns on mobile */
+        gap: 10px;
+    }
+    
+    footer span {
+        display: block;
+        margin: 5px 0;
+    }
+    
+    footer a {
+        display: block;
+        margin: 5px 0;
+    }
+}
+    
+</style>
+</head>
+
+<body>
+
+<div class="main-container">
+
+<nav>
+<ul class="nav nav-pills justify-content-center">
+  <li class="nav-item">
+    <a class="nav-link" href="index.html">Home</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link active" aria-current="page" href="pantry.html">Pantry</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="recipes.html">Recipes</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="addrecipes.html">Add Recipe</a>
+  </li>
+   <li class="nav-item">
+    <a class="nav-link" href="profile.html">Profile</a>
+  </li>
+</ul>
+</nav>
+
+<div class="hero">
+
+<div class="title">🧺 My Pantry</div>
+
+<div class="search">
+<input type="text" placeholder="Search ingredients..." onkeyup="searchItems()">
+</div>
+
+<div class="categories">
+<button onclick="filterItems('all')">All</button>
+<button onclick="filterItems('protein')">Protein</button>
+<button onclick="filterItems('veggies')">Veggies</button>
+<button onclick="filterItems('spices')">Spices</button>
+<button onclick="filterItems('dairy')">Dairy</button>
+<button onclick="filterItems('grains')">Grains</button>
+</div>
+
+<div class="grid" id="ingredientsGrid">
+<label class="item" data-cat="protein">
+<input type="checkbox" value="Chicken"> 🍗 Chicken
+</label>
+<label class="item" data-cat="veggies">
+<input type="checkbox" value="Potato"> 🥔 Potato
+</label>
+<label class="item" data-cat="veggies">
+<input type="checkbox" value="Onion"> 🧅 Onion
+</label>
+<label class="item" data-cat="veggies">
+<input type="checkbox" value="Tomato"> 🍅 Tomato
+</label>
+<label class="item" data-cat="grains">
+<input type="checkbox" value="Oats"> 🌾 Oats
+</label>
+<label class="item" data-cat="veggies">
+<input type="checkbox" value="Carrot"> 🥕 Carrot
+</label>
+<label class="item" data-cat="veggies">
+<input type="checkbox" value="Banana"> 🍌 Banana
+</label>
+<label class="item" data-cat="dairy">
+<input type="checkbox" value="Milk"> 🥛 Milk
+</label>
+<label class="item" data-cat="veggies">
+<input type="checkbox" value="Garlic"> 🧄 Garlic
+</label>
+<label class="item" data-cat="spices">
+<input type="checkbox" value="Basil"> 🌿 Basil
+</label>
+<label class="item" data-cat="dairy">
+<input type="checkbox" value="Cheddar"> 🧀 Cheddar
+</label>
+<label class="item" data-cat="spices">
+<input type="checkbox" value="Curry powder"> 🍛 Curry powder
+</label>
+<label class="item" data-cat="veggies">
+<input type="checkbox" value="Lemon"> 🍋 Lemon
+</label>
+<label class="item" data-cat="protein">
+<input type="checkbox" value="Fish"> 🐟 Fish
+</label>
+<label class="item" data-cat="grains">
+<input type="checkbox" value="Rice"> 🍚 Rice
+</label>
+<label class="item" data-cat="spices">
+<input type="checkbox" value="Chillies"> 🌶️ Chillies
+</label>
+</div>
+
+<div class="find">
+<button onclick="findRecipes()">Find Matching Recipes</button>
+</div>
+
+</div>
+
+<footer>
+© 2026 What's in My Kitchen? | Privacy | Terms | Contact
+</footer>
+
+</div>
+
+<script>
+
+function filterItems(category){
+let items = document.querySelectorAll(".item")
+
+items.forEach(item => {
+if(category === "all"){
+item.style.display = "flex"
+}
+else if(item.dataset.cat === category){
+item.style.display = "flex"
+}
+else{
+item.style.display = "none"
+}
+})
+}
+
+function findRecipes(){
+let selected = []
+document.querySelectorAll('input[type="checkbox"]:checked')
+.forEach(cb => selected.push(cb.value))
+
+localStorage.setItem("ingredients", JSON.stringify(selected))
+window.location.href="recipes.html"
+}
+
+function searchItems(){
+let input = document.querySelector(".search input").value.toLowerCase();
+let items = document.querySelectorAll(".item");
+
+items.forEach(item => {
+let text = item.textContent.toLowerCase();
+item.style.display = text.includes(input) ? "flex" : "none";
+});
+}
+
+</script>
+
+</body>
+</html>
+
+

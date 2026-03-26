@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Recipe Details</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
+<style>
+
+body{
+margin:0;
+font-family:Arial;
+background-image: url("https://i.pinimg.com/736x/20/14/bd/2014bd35882ea558f5a181002f92e233.jpg");
+background-attachment:fixed;
+background-size:cover;
+background-position:center;
+}
+
+/* Main container */
+.main-container {
+    max-width: 1000px;
+    width: 95%;
+    margin: 30px auto;
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 40px;
+    padding: 30px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+}
+
+/* Back button */
+.back-btn {
+    display: inline-block;
+    margin-bottom: 25px;
+    padding: 12px 25px;
+    background: #e6a87a;
+    color: #670D0D;
+    text-decoration: none;
+    border-radius: 30px;
+    font-weight: bold;
+    transition: all 0.3s ease;
+    border: none;
+    font-size: 1rem;
+}
+
+.back-btn:hover {
+    background: #7a0000;
+    color: white;
+    transform: translateX(-5px);
+}
+
+.back-btn i {
+    margin-right: 8px;
+}
+
+/* Recipe header */
+.recipe-header {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+h1 {
+    color: #7a0000;
+    font-size: clamp(1.8rem, 5vw, 2.5rem);
+    font-weight: bold;
+    margin-bottom: 15px;
+}
+
+/* Recipe image */
+.recipe-image {
+    width: 100%;
+    max-width: 400px;
+    height: 250px;
+    object-fit: cover;
+    border-radius: 30px;
+    margin: 0 auto 20px auto;
+    display: block;
+    border: 4px solid #e6a87a;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+}
+
+/* Recipe info badges */
+.recipe-info {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-bottom: 30px;
+    flex-wrap: wrap;
+}
+
+.info-badge {
+    background: #e6a87a;
+    color: #670D0D;
+    padding: 10px 25px;
+    border-radius: 30px;
+    font-weight: bold;
+    font-size: clamp(0.9rem, 2.5vw, 1rem);
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.info-badge i {
+    font-size: 1.2rem;
+    color: #7a0000;
+}
+
+/* Section titles */
+h3 {
+    color: #7a0000;
+    font-size: clamp(1.3rem, 4vw, 1.8rem);
+    font-weight: bold;
+    margin: 30px 0 20px 0;
+    padding-bottom: 10px;
+    border-bottom: 3px solid #e6a87a;
+    display: inline-block;
+}
+
+/* Ingredients list */
+.ingredients-list {
+    list-style: none;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 12px;
+}
+
+.ingredients-list li {
+    background: rgba(230, 168, 122, 0.2);
+    padding: 12px 18px;
+    border-radius: 50px;
+    font-size: 1rem;
+    color: #670D0D;
+    border: 2px solid #e6a87a;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.ingredients-list li:before {
+    content: "🧂";
+    font-size: 1.1rem;
+}
+
+/* Procedure list */
+.procedure-list {
+    list-style: none;
+    padding: 0;
+    counter-reset: step-counter;
+}
+
+.procedure-list li {
+    background: rgba(255, 255, 255, 0.8);
+    padding: 15px 20px 15px 50px;
+    margin-bottom: 12px;
+    border-radius: 15px;
+    font-size: 1rem;
+    color: #333;
+    position: relative;
+    border-left: 4px solid #e6a87a;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+
+.procedure-list li:before {
+    content: counter(step-counter);
+    counter-increment: step-counter;
+    background: #7a0000;
+    color: white;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.9rem;
+    font-weight: bold;
+    position: absolute;
+    left: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+/* Button container */
+.button-container {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 30px;
+    flex-wrap: wrap;
+}
+
+/* Save button */
+.save-btn {
+    background: #7a0000;
+    color: white;
+    padding: 12px 30px;
+    border: none;
+    border-radius: 30px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 1rem;
+}
+
+.save-btn:hover {
+    background: #5b390b;
+    transform: scale(1.05);
+}
+
+.save-btn i {
+    font-size: 1.1rem;
+}
+
+/* Save button - saved state */
+.save-btn.saved {
+    background: #28a745;
+}
+
+.save-btn.saved:hover {
+    background: #218838;
+}
+
+/* Success message */
+.success-message {
+    background: #4CAF50;
+    color: white;
+    padding: 12px 25px;
+    border-radius: 30px;
+    margin-top: 15px;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    font-weight: bold;
+    animation: slideIn 0.3s ease;
+}
+
+.success-message.show {
+    display: flex;
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.success-message i {
+    font-size: 1.2rem;
+}
+
+/* Footer */
+footer {
+    text-align: center;
+    margin-top: 30px;
+    color: white;
+}
+
+/* Responsive adjustments */
+@media screen and (max-width: 768px) {
+    .main-container {
+        width: 92%;
+        padding: 20px;
+    }
+    
+    .ingredients-list {
+        grid-template-columns: 1fr;
+    }
+    
+    .recipe-image {
+        height: 200px;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .main-container {
+        padding: 15px;
+    }
+    
+    .back-btn {
+        width: 100%;
+        text-align: center;
+    }
+    
+    .recipe-info {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    
+    .info-badge {
+        justify-content: center;
+    }
+    
+    .procedure-list li {
+        padding: 12px 12px 12px 45px;
+        font-size: 0.95rem;
+    }
+    
+    .button-container {
+        flex-direction: column;
+    }
+    
+    .save-btn {
+        width: 100%;
+        justify-content: center;
+    }
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="main-container">
+
+<a href="recipes.html" class="back-btn">
+    <i class="bi bi-arrow-left"></i> Back to Recipes
+</a>
+
+<div class="recipe-header">
+    <h1 id="name"></h1>
+</div>
+
+<img id="image" class="recipe-image" alt="Recipe image">
+
+<div class="recipe-info" id="info"></div>
+
+<h3><i class="bi bi-basket"></i> Ingredients</h3>
+<ul id="ingredients" class="ingredients-list"></ul>
+
+<h3><i class="bi bi-list-check"></i> Procedure</h3>
+<ol id="steps" class="procedure-list"></ol>
+
+<div class="button-container">
+    <button class="save-btn" onclick="saveToProfile()" id="saveBtn">
+        <i class="bi bi-bookmark-plus"></i> Save to My Profile
+    </button>
+</div>
+
+<!-- Success message -->
+<div id="successMessage" class="success-message">
+    <i class="bi bi-check-circle-fill"></i>
+    <span>Recipe saved to your profile!</span>
+</div>
+
+</div>
+
+<footer>
+    © 2026 What's in My Kitchen?
+</footer>
+
+<script>
+
+let recipe = JSON.parse(localStorage.getItem("selectedRecipe"))
+
+if(recipe) {
+    // Set recipe name
+    document.getElementById("name").innerText = recipe.name
+    
+    // Set recipe image
+    document.getElementById("image").src = recipe.img
+    
+    // Set recipe info badges
+    let infoContainer = document.getElementById("info")
+    infoContainer.innerHTML = `
+        <span class="info-badge"><i class="bi bi-clock"></i> ${recipe.time}</span>
+        <span class="info-badge"><i class="bi bi-bar-chart"></i> ${recipe.difficulty}</span>
+    `
+    
+    // Add ingredients
+    let ingList = document.getElementById("ingredients")
+    recipe.ingredients.forEach(i => {
+        ingList.innerHTML += `<li>${i}</li>`
+    })
+    
+    // Add procedure steps
+    let stepList = document.getElementById("steps")
+    recipe.steps.forEach(s => {
+        stepList.innerHTML += `<li>${s}</li>`
+    })
+    
+    // Check if recipe is already saved
+    checkIfSaved()
+}
+
+// Function to save recipe to profile
+function saveToProfile() {
+    // Get existing saved recipes from localStorage
+    let savedRecipes = JSON.parse(localStorage.getItem("savedRecipes")) || []
+    
+    // Check if recipe is already saved
+    let isAlreadySaved = savedRecipes.some(r => r.name === recipe.name)
+    
+    if (!isAlreadySaved) {
+        // Add current recipe to saved recipes
+        savedRecipes.push(recipe)
+        
+        // Save back to localStorage
+        localStorage.setItem("savedRecipes", JSON.stringify(savedRecipes))
+        
+        // Update button state
+        let saveBtn = document.getElementById("saveBtn")
+        saveBtn.innerHTML = '<i class="bi bi-bookmark-check-fill"></i> Saved to Profile'
+        saveBtn.classList.add("saved")
+        
+        // Show success message
+        let successMsg = document.getElementById("successMessage")
+        successMsg.classList.add("show")
+        
+        // Hide success message after 3 seconds
+        setTimeout(() => {
+            successMsg.classList.remove("show")
+        }, 3000)
+    } else {
+        // Show already saved message
+        let successMsg = document.getElementById("successMessage")
+        successMsg.innerHTML = '<i class="bi bi-info-circle-fill"></i> Recipe already saved!'
+        successMsg.style.background = "#e6a87a"
+        successMsg.style.color = "#670D0D"
+        successMsg.classList.add("show")
+        
+        setTimeout(() => {
+            successMsg.classList.remove("show")
+            // Reset message style
+            setTimeout(() => {
+                successMsg.innerHTML = '<i class="bi bi-check-circle-fill"></i> Recipe saved to your profile!'
+                successMsg.style.background = "#4CAF50"
+                successMsg.style.color = "white"
+            }, 300)
+        }, 2000)
+    }
+}
+
+// Function to check if recipe is already saved
+function checkIfSaved() {
+    let savedRecipes = JSON.parse(localStorage.getItem("savedRecipes")) || []
+    let isAlreadySaved = savedRecipes.some(r => r.name === recipe.name)
+    
+    if (isAlreadySaved) {
+        let saveBtn = document.getElementById("saveBtn")
+        saveBtn.innerHTML = '<i class="bi bi-bookmark-check-fill"></i> Saved to Profile'
+        saveBtn.classList.add("saved")
+    }
+}
+
+</script>
+
+</body>
+</html>

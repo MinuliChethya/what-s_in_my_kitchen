@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Matching Recipes</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
+<style>
+
+body{
+margin:0;
+font-family:Arial;
+background-image: url("https://i.pinimg.com/736x/e1/8f/43/e18f43411827ea579deeafa6721554f2.jpg");
+background-attachment:fixed;
+background-size:cover;
+background-position:center;
+}
+
+/* Desktop container */
+.main-container{
+max-width:1200px;
+width:100%;
+margin:auto;
+/* background:white; */  /* Transparent to show background */
+}
+
+/* Navigation */
+nav{
+background:#e6a87a;
+padding:10px 0;
+text-align:center;
+color:#670D0D;
+}
+
+/* Hero section */
+.hero {
+    min-height: 500px;
+    height: auto;
+    padding: 40px 20px;
+    text-align: center;
+}
+
+/* Title bubble - matching homepage style */
+.title {
+    background: transparent;  /* Transparent to show background */
+    padding: clamp(20px, 5vw, 40px) clamp(20px, 5vw, 80px);
+    border-radius: 30px;
+    margin: 0 auto 40px auto;
+    max-width: 90%;
+    width: fit-content;
+    font-size: clamp(2rem, 6vw, 3rem);
+    font-weight: bold;
+    color: #7a0000;
+}
+
+/* Selected ingredients badge */
+.selected-ingredients {
+    background: rgba(230, 168, 122, 0.9);
+    padding: 15px 25px;
+    border-radius: 50px;
+    margin: 20px auto 30px auto;
+    max-width: 800px;
+    font-size: clamp(0.9rem, 2.2vw, 1rem);
+    color: #670D0D;
+    font-weight: bold;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+}
+
+.ingredient-tag {
+    background: #7a0000;
+    color: white;
+    padding: 5px 15px;
+    border-radius: 25px;
+    font-size: 0.9rem;
+    display: inline-block;
+}
+
+/* Recipes grid */
+.recipes {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+    margin: 40px auto;
+    max-width: 1100px;
+    padding: 0 15px;
+}
+
+/* Recipe cards */
+.card {
+    background: rgba(255, 255, 255, 0.95);
+    border: none;
+    border-radius: 20px !important;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+}
+
+.card img {
+    height: 200px;
+    object-fit: cover;
+    border-bottom: 3px solid #e6a87a;
+}
+
+.card-body {
+    padding: 20px;
+    text-align: left;
+}
+
+.card-title {
+    color: #7a0000;
+    font-weight: bold;
+    font-size: clamp(1.2rem, 3vw, 1.4rem);
+    margin-bottom: 12px;
+}
+
+.card-text {
+    color: #670D0D;
+    font-size: 0.95rem;
+    margin-bottom: 15px;
+}
+
+.card-text i {
+    color: #e6a87a;
+    margin-right: 5px;
+}
+
+/* Progress bar */
+.progress {
+    height: 25px;
+    border-radius: 12px;
+    margin: 15px 0 10px 0;
+    background-color: #f0d5bf;
+}
+
+.progress-bar {
+    background: linear-gradient(45deg, #7a0000, #e6a87a) !important;
+    border-radius: 12px;
+    font-weight: bold;
+    font-size: 0.85rem;
+    line-height: 25px;
+}
+
+.match-badge {
+    display: inline-block;
+    background: #e6a87a;
+    color: #670D0D;
+    padding: 5px 15px;
+    border-radius: 25px;
+    font-weight: bold;
+    font-size: 0.9rem;
+    margin-top: 5px;
+}
+
+/* No recipes message */
+.no-recipes {
+    background: rgba(255,255,255,0.9);
+    padding: 40px;
+    border-radius: 30px;
+    font-size: 1.2rem;
+    color: #7a0000;
+    text-align: center;
+    margin: 40px auto;
+    max-width: 600px;
+    font-weight: bold;
+}
+
+/* Footer */
+footer{
+background:black;
+color:white;
+text-align:center;
+padding:15px;
+margin-top: 40px;
+}
+
+/* Navigation styling */
+.nav-pills {
+    justify-content: center;
+}
+
+.nav-pills .nav-link {
+color: #8b0000; 
+font-weight: bold;
+margin: 0 10px;
+}
+
+.nav-pills .nav-link.active {
+    background-color: rgb(182, 128, 58);
+    color: #670D0D; 
+    font-weight: bold;
+}
+
+.nav-link:hover {
+    color: #ffb54d;
+    text-decoration: underline;
+}
+
+/* Responsive adjustments */
+@media screen and (max-width: 1200px) {
+    .main-container {
+        width: 95%;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .nav-pills {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .nav-pills .nav-link {
+        width: 100%;
+        text-align: center;
+        margin: 3px 0 !important;
+    }
+    
+    .recipes {
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 20px;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .title {
+        font-size: clamp(1.5rem, 5vw, 2rem);
+        padding: 15px;
+    }
+    
+    .selected-ingredients {
+        padding: 12px;
+    }
+    
+    .card img {
+        height: 160px;
+    }
+    
+    footer span {
+        display: block;
+        margin: 5px 0;
+    }
+    
+    footer a {
+        display: block;
+        margin: 5px 0;
+    }
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="main-container">
+
+<nav>
+<ul class="nav nav-pills justify-content-center">
+  <li class="nav-item">
+    <a class="nav-link" href="index.html">Home</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="pantry.html">Pantry</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link active" aria-current="page" href="recipes.html">Recipes</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="addrecipes.html">Add Recipe</a>
+  </li>
+   <li class="nav-item">
+    <a class="nav-link" href="profile.html">Profile</a>
+  </li>
+</ul>
+</nav>
+
+<div class="hero">
+
+<div class="title">📖 Matching Recipes</div>
+
+<!-- Selected ingredients display -->
+<div class="selected-ingredients" id="selectedIngredients"></div>
+
+<!-- Recipes container -->
+<div class="recipes" id="recipes"></div>
+
+</div>
+
+<footer>
+© 2026 What's in My Kitchen? | Privacy | Terms | Contact
+</footer>
+
+</div>
+
+<script>
+
+/* Selected ingredients */
+let ingredients = JSON.parse(localStorage.getItem("ingredients")) || []
+
+/* Display selected ingredients */
+function displaySelectedIngredients() {
+    let container = document.getElementById("selectedIngredients")
+    if (ingredients.length > 0) {
+        container.innerHTML = "Selected: " + ingredients.map(item => 
+            `<span class="ingredient-tag">${item}</span>`
+        ).join(" ")
+    } else {
+        container.innerHTML = "No ingredients selected. Go to Pantry to select ingredients."
+    }
+}
+
+/* Recipe database */
+let recipeData = [
+{
+name:"Spanish Omelette",
+ingredients:["Onion","Potato"],
+time:"15 min",
+difficulty:"Easy",
+img:"https://images.unsplash.com/photo-1604908176997-125f25cc6f3d",
+steps:[
+"Slice potatoes and onions",
+"Fry them in olive oil",
+"Add beaten eggs",
+"Cook until golden"
+]
+},
+{
+name:"Garlic Tomato Pasta",
+ingredients:["Garlic","Tomato"],
+time:"25 min",
+difficulty:"Medium",
+img:"https://i.pinimg.com/736x/f6/8f/f4/f68ff44d5f58e8e8743375da6543fca9.jpg",
+steps:[
+"Boil pasta",
+"Saute garlic",
+"Add tomato sauce",
+"Mix pasta with sauce"
+]
+},
+{
+name:"Veggie Curry",
+ingredients:["Potato","Curry powder"],
+time:"20 min",
+difficulty:"Easy",
+img:"https://i.pinimg.com/1200x/db/bd/b4/dbbdb4b8a786f423e75f15e023b63819.jpg",
+steps:[
+"Cut vegetables",
+"Cook with curry powder",
+"Add water and simmer",
+"Serve hot"
+]
+},
+{
+name:"Shakshuka",
+ingredients:["Tomato","Onion"],
+time:"30 min",
+difficulty:"Medium",
+img:"https://i.pinimg.com/1200x/94/a1/99/94a199d724da80151a71389355bb52c0.jpg",
+steps:[
+"Cook onions",
+"Add tomato sauce",
+"Crack eggs into sauce",
+"Cook until eggs set"
+]
+},
+{
+name:"Creamy Mac & Veggie Pasta",
+ingredients:["Carrot","Cheddar"],
+time:"25 min",
+difficulty:"Easy",
+img:"https://i.pinimg.com/1200x/5c/21/61/5c2161770d5032a8f65e6c3944ae636f.jpg",
+steps:[
+"Cook pasta and drain.",
+"Mix in mashed veggies, cheese, and milk.",
+"Stir on low heat until creamy.",
+"Add more milk for smoother texture"
+]
+},
+{
+name:"Creamy Oats with Banana",
+ingredients:["Banana","Oats","Milk"],
+time:"10 min",
+difficulty:"Easy",
+img:"https://i.pinimg.com/736x/43/c8/97/43c8973b1ff425d3b72c4e0491953435.jpg",
+steps:[
+"Cook oats with milk until soft.",
+"Stir in mashed banana and cinnamon."
+]
+},
+{
+name:"Fish Curry",
+ingredients:["Fish","Curry powder","Onion"],
+time:"30 min",
+difficulty:"Medium",
+img:"https://i.pinimg.com/736x/f6/e8/31/f6e8316a80c7e683ebf9aa2abba7f101.jpg",
+steps:[
+"Marinate fish with spices",
+"Cook onions until golden",
+"Add curry powder and water",
+"Add fish and simmer"
+]
+},
+{
+name:"Cheesy Potato Bake",
+ingredients:["Potato","Cheddar","Milk"],
+time:"45 min",
+difficulty:"Medium",
+img:"https://i.pinimg.com/1200x/6b/91/68/6b9168eb8cb2f8ba78acebbf9abc3c45.jpg",
+steps:[
+"Slice potatoes thinly",
+"Layer with cheese and milk",
+"Bake until golden",
+"Let rest before serving"
+]
+}
+]
+
+let container = document.getElementById("recipes")
+
+/* Display selected ingredients */
+displaySelectedIngredients()
+
+/* Filter and display recipes */
+let hasMatches = false
+
+recipeData.forEach(recipe => {  
+    let matchCount = recipe.ingredients.filter(i => ingredients.includes(i)).length
+    let matchPercent = Math.floor((matchCount / recipe.ingredients.length) * 100)
+
+    if (matchCount > 0) {
+        hasMatches = true
+        container.innerHTML += `
+        <div class="card" onclick='openRecipe(${JSON.stringify(recipe).replace(/'/g, "\\'")})'>
+            <img src="${recipe.img}" class="card-img-top" alt="${recipe.name}">
+            <div class="card-body">
+                <h5 class="card-title">${recipe.name}</h5>
+                <p class="card-text">
+                    <i class="bi bi-clock"></i> ${recipe.time}  
+                    &nbsp; | &nbsp;
+                    <i class="bi bi-bar-chart"></i> ${recipe.difficulty}
+                </p>
+                <div class="progress">
+                    <div class="progress-bar" style="width:${matchPercent}%">
+                        ${matchPercent}% Match
+                    </div>
+                </div>
+                <span class="match-badge">
+                    <i class="bi bi-check-circle-fill"></i> ${matchCount}/${recipe.ingredients.length} ingredients
+                </span>
+            </div>
+        </div>
+        `
+    }
+})
+
+/* Show message if no matches */
+if (!hasMatches) {
+    container.innerHTML = '<div class="no-recipes">🍳 No matching recipes found. Try adding more ingredients to your pantry!</div>'
+}
+
+/* Open recipe page */
+function openRecipe(recipe) {
+    localStorage.setItem("selectedRecipe", JSON.stringify(recipe))
+    window.location.href = "recipe-details.html"
+}
+
+</script>
+
+</body>
+</html>
+
