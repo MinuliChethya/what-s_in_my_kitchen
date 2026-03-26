@@ -33,7 +33,7 @@ Contact Form
 
 Send messages to the admin
 Store messages in database
-Setup Instructions Install XAMPP from https://www.apachefriends.org Start Apache and MySQL in XAMPP Control Panel Open phpMyAdmin at http://localhost/phpmyadmin Create a database called kitchen_app Import the database.sql file (click Import in phpMyAdmin) Copy this project folder into C:/xampp/htdocs/kitchen/ Open http://localhost/kitchen/index.php in your browser
+Setup Instructions Install XAMPP from https://www.apachefriends.org Start Apache and MySQL in XAMPP Control Panel Open phpMyAdmin at http://localhost/phpmyadmin Create a database called kitchen_app Import the database.sql file (click Import in phpMyAdmin) Copy this project folder into C:/xampp/htdocs/kitchen_app/ Open http://localhost/kitchen_app/index.php in your browser
 
 🛠 Technologies Used
 Frontend: HTML5, CSS3, Bootstrap 5, JavaScript
