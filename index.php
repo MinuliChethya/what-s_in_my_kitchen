@@ -1,0 +1,182 @@
+<?php
+require_once 'include/functions.php';
+?>
+<!DOCTYPE html>
+<html>
+<head>
+<title>What's in My Kitchen</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
+<style>
+body{
+margin:0;
+font-family:Arial;
+background-image: url("https://i.pinimg.com/1200x/00/9b/17/009b17ecce180e2d5113aa95f0cc6836.jpg");
+background-attachment:fixed;
+background-size:cover;
+background-position:center;
+}
+.main-container{
+max-width:1200px;
+width:100%;
+margin:auto;
+}
+nav{
+background:#e6a87a;
+padding:10px 0; 
+text-align:center;
+color:#670D0D;
+}
+.hero {
+    position: relative;
+    min-height: 500px; 
+    height: auto; 
+    text-align: center; 
+    padding:40px 20px;
+}
+.hero-box {
+    padding: clamp(20px, 5vw, 40px) clamp(20px, 5vw, 80px);
+    border-radius: 30px;
+    margin: auto;
+    max-width: 90%;
+    width: fit-content;
+    background: transparent;
+}
+.hero-box h1 {
+    color: #7a0000;
+    font-size: clamp(2rem, 8vw, 4rem);
+    margin-bottom: 10px;
+    font-weight: bold;
+}
+button {
+    padding: clamp(8px, 2vw, 12px) clamp(15px, 4vw, 25px);
+    background: #7a0000;
+    color: white;
+    border: none;
+    margin-top: 20px;
+    cursor: pointer;
+    font-size: clamp(0.9rem, 2.5vw, 1rem);
+    border-radius: 5px;
+}
+.features {
+    margin: 30px auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.feature {
+    background: #e6a87a;
+    padding: clamp(8px, 2vw, 12px) clamp(15px, 4vw, 30px);
+    margin: 5px;
+    display: inline-block;
+    border-radius: 6px;
+    font-weight: bold;
+    width: fit-content;
+}
+.how {
+    position: relative;
+    bottom: 0;
+    width: 100%;
+    background: rgba(230, 168, 122, 0.9);
+    text-align: center;
+    padding: clamp(15px, 3vw, 20px);
+    margin-top: 40px;
+    border-radius: 8px;
+}
+.nav-pills {
+    justify-content: center;
+}
+.nav-pills .nav-link {
+color: #8b0000; 
+font-weight: bold;
+margin: 0 10px;
+}
+.nav-pills .nav-link.active {
+    background-color: rgb(182, 128, 58);
+    color:#670D0D; 
+}
+.user-greeting {
+    background: #7a0000;
+    color: white;
+    padding: 5px 15px;
+    border-radius: 30px;
+    font-size: 0.9rem;
+    margin-left: 15px;
+}
+@media screen and (max-width: 768px) {
+    .nav-pills {
+        flex-direction: column;
+        align-items: center;
+    }
+    .nav-pills .nav-link {
+        width: 100%;
+        text-align: center;
+        margin: 3px 0 !important;
+    }
+}
+</style>
+</head>
+<body>
+<div class="main-container">
+<nav>
+<ul class="nav nav-pills justify-content-center">
+  <li class="nav-item">
+    <a class="nav-link active" aria-current="page" href="index.php">Home</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="pantry.php">Pantry</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="recipes.php">Recipes</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="addrecipes.php">Add Recipe</a>
+  </li>
+   <li class="nav-item">
+    <a class="nav-link" href="profile.php">Profile</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="contact.php">Contact</a>
+  </li>
+  <?php if (isLoggedIn()): ?>
+    <li class="nav-item">
+        <span class="user-greeting">Welcome, <?php echo $_SESSION['username']; ?>!</span>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="auth/logout.php">Logout</a>
+    </li>
+  <?php else: ?>
+    <li class="nav-item">
+        <a class="nav-link" href="auth/login.php">Login</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="auth/register.php">Register</a>
+    </li>
+  <?php endif; ?>
+</ul>
+</nav>
+<div class="hero">
+<div class="hero-box">
+<h1>What's in My Kitchen?</h1>
+<p>Discover recipes from ingredients you already have</p>
+<a href="pantry.php">
+<button>Check My Pantry</button>
+</a>
+</div>
+<div class="features">
+<div class="feature"><i class="bi bi-check-circle-fill"></i> SMART MATCH</div>
+<div class="feature"><i class="bi bi-check-circle-fill"></i> SAVE MONEY</div>
+<div class="feature"><i class="bi bi-check-circle-fill"></i> LESS WASTE</div>
+</div>
+<div class="how">
+<strong>How It Works</strong><br>
+1. Add Pantry Items  <i class="bi bi-cart4"></i> &nbsp;&nbsp; 2. Match Recipes  <i class="bi bi-list-check"></i> &nbsp;&nbsp; 3. Cook & Enjoy  <i class="bi bi-fork-knife"></i>
+</div>
+</div>
+<footer style="background:black; color:white; text-align:center; padding:15px;">
+© 2026 What's in My Kitchen? | Privacy | Terms | Contact
+</footer>
+</div>
+</body>
+</html>
