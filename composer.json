@@ -1,0 +1,8 @@
+{
+  "name": "kitchen/recipe-app",
+  "description": "What's in My Kitchen? Recipe Application",
+  "type": "project",
+  "require": {
+    "php": ">=8.0"
+  }
+}
